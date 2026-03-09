@@ -1,0 +1,33 @@
+Update the existing for documentation the getByCategoryName function to reflect the current implementation.
+To summarize a documentation for a turn-based MMORPG inspired by OGame, here are some key aspects we could focus on:
+	1.	Game Overview:
+	•	Brief description of the game world, setting, and premise.
+	•	Core gameplay mechanics (turn-based RTS, empire-building, resource management, combat, diplomacy).
+	2.	Gameplay Features:
+	•	Resource Management: How resources are gathered, traded, and used.
+	•	Technology Tree: Different tech upgrades and research paths.
+	•	Empire Building: Players manage their own empire, build structures, and expand their territories.
+	•	Fleet Management: Design and manage fleets, plan strategic attacks, or defend against invasions.
+	•	Combat System: How turn-based combat works, including fleet battles, planetary defense, and siege mechanics.
+	•	Diplomacy: Alliances, treaties, trade, and strategic diplomacy systems.
+	•	Turn-based System: How each turn works (e.g., limited actions per turn, turn timers).
+	3.	Monetization Model:
+	•	In-game purchases, premium currency, and progression paths (e.g., VIP status, booster packs, and special ships).
+	4.	Player Interaction:
+	•	Multiplayer interaction through alliances, PvP, or cooperative PvE content.
+	•	Global Economy: Player-run markets, trade agreements, and resource exchange.
+	•	Chat and Communication: Message systems, forums, and in-game chat for alliances and diplomacy.
+	5.	AI Behavior:
+	•	How the game’s AI controls NPC factions or enemies.
+	•	How the AI behaves in terms of combat, diplomacy, and resource management.
+	6.	Technology Stack:
+	•	The backend (e.g., PHP, SQL) and frontend (HTML5, JavaScript) technologies used.
+	•	Database management and real-time communication through WebSockets.
+	7.	Game Progression:
+	•	How players level up, unlock new abilities, structures, and fleet types.
+	•	Exploration, quest systems, and missions.
+	8.	Social Features:
+	•	Alliances, guilds, and in-game events for player engagement.
+	•	Leaderboards and player ranking systems.
+
+Does this approach align with what you need summarized, or would you like more specific details in any area? You can also upload any documentation you want me to go over for a more in-depth summary.

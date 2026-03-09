@@ -1,0 +1,97 @@
++--------------------+        +-----------------+
+|      Player        |        |      Planet     |
++--------------------+        +-----------------+
+| - id               |        | - id            |
+| - username         |        | - name          |
+| - resources[]      |        | - ownerID       |
+| - planets[]        |        | - resources     |
+| - fleet[]          |        | - buildings[]   |
+| - allianceID       |        +-----------------+
++--------------------+                 |
+       |                               |
+       |-------------------------------|
+       |
++--------------------+        +-----------------+
+|       Fleet        |        |     Building    |
++--------------------+        +-----------------+
+| - id               |        | - id            |
+| - ownerID          |        | - type          |
+| - ships[]          |        | - level         |
+| - missionType      |        | - resourceCost  |
++--------------------+        +-----------------+
+1. Use Case Diagram
+
+Actors:
+	•	Player: Registers, manages planets, attacks, defends, and trades resources.
+	•	Admin: Moderates game, manages player accounts, and resolves disputes.
+
+Use Cases:
+	•	Register/Login
+	•	Manage Planets (Build/Upgrade/Destroy Structures)
+	•	Send Fleets (Attack/Trade/Colonize)
+	•	Research Technologies
+	•	Join/Create Alliances
+	•	Trade Resources
+	•	Administer Game (Admin Only)
+
+2. Class Diagram
+
+Here’s an example of how classes can be structured for such a game:
+
+Classes and Relationships
+	1.	Player
+	•	Attributes: id, username, email, resources (array), planets (array), fleet (array), allianceID
+	•	Methods: register(), login(), logout(), manageResources(), attack(), trade()
+	2.	Planet
+	•	Attributes: id, name, ownerID, resources, buildings (array)
+	•	Methods: upgradeBuilding(), extractResources()
+	3.	Fleet
+	•	Attributes: id, ownerID, ships (array), destination, missionType (attack/trade/colonize)
+	•	Methods: sendFleet(), returnFleet(), attackTarget()
+	4.	Building
+	•	Attributes: id, type, level, resourceCost
+	•	Methods: upgrade()
+	5.	Technology
+	•	Attributes: id, name, researchCost, effect
+	•	Methods: research()
+	6.	Alliance
+	•	Attributes: id, name, leaderID, members (array)
+	•	Methods: addMember(), removeMember(), declareWar()
+	7.	GameEngine
+	•	Attributes: currentTurn, gameState
+	•	Methods: processTurn(), resolveConflicts()
+
+3. Sequence Diagram
+
+Example: Fleet Attack Sequence
+	1.	Player sends a fleet to attack a target.
+	2.	System validates fleet composition and resources.
+	3.	Fleet travels to the target over time.
+	4.	Battle is resolved based on fleet composition and technologies.
+	5.	Resources are transferred if the attack is successful.
+	6.	Fleet returns to the player’s planet.
+
+4. Activity Diagram
+
+Workflow: Building Upgrade
+	1.	Player selects a building to upgrade.
+	2.	System checks if resources are sufficient.
+	3.	Resources are deducted.
+	4.	Building enters an “under construction” state.
+	5.	Time elapses.
+	6.	Building level is upgraded.
+
+
+5. Component Diagram
+
+Components:
+	1.	Frontend (Browser):
+	•	Handles user input and displays game data (HTML/CSS/JavaScript).
+	2.	Backend (PHP):
+	•	Processes game logic (fleet movement, battles, resource generation).
+	3.	Database:
+	•	Stores player data, planet details, alliances, and game state.
+
+Example Relationships:
+	•	Frontend communicates with Backend using AJAX/REST API.
+	•	Backend interacts with the database for storing/retrieving game state.

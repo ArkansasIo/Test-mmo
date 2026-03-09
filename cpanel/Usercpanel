@@ -1,0 +1,77 @@
+<?php
+session_start();
+include '../includes/header.php';
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    echo "<p>You must <a href='../index.php?page=login'>log in</a> to access the user control panel.</p>";
+    include '../includes/footer.php';
+    exit();
+}
+
+// Fetch player data
+$username = $_SESSION['username'];
+$pdo = new PDO('mysql:host=localhost;dbname=scifi_conquest', 'root', '');
+$stmt = $pdo->prepare("SELECT * FROM players WHERE username = ?");
+$stmt->execute([$username]);
+$player = $stmt->fetch();
+
+// Fetch player's settings
+$stmt = $pdo->prepare("SELECT * FROM user_settings WHERE player_id = ?");
+$stmt->execute([$player['id']]);
+$settings = $stmt->fetch();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Update user settings
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
+    $stmt = $pdo->prepare("UPDATE players SET email = ?, password = ? WHERE id = ?");
+    $stmt->execute([$email, $password, $player['id']]);
+
+    header("Location: Usercpanel.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Control Panel</title>
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+    <header>
+        <h1>User Control Panel</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.php">Home</a></li>
+                <li><a href="Usercpanel.php">User Panel</a></li>
+                <li><a href="../logout.php">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Account Settings</h2>
+            <form action="Usercpanel.php" method="post">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($player['email']); ?>" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Update</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Game Settings</h2>
+            <!-- Add game-specific settings here -->
+        </section>
+    </main>
+
+    <?php include '../includes/footer.php'; ?>
+</body>
+</html>

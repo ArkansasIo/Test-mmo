@@ -1,0 +1,86 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1f1f1f;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    padding: 20px;
+    color: white;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+header .user-info {
+    text-align: right;
+    margin-top: 10px;
+}
+
+section {
+    padding: 20px;
+}
+
+.resources .resource-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.resources .resource-item img {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+.action-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.action-item {
+    text-align: center;
+}
+
+.action-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background-color: #45a049;
+}
+
+.news {
+    background-color: #333;
+    padding: 10px;
+    margin-top: 30px;
+}
+
+.news ul {
+    list-style: none;
+    padding: 0;
+}
+
+.news ul li {
+    margin: 5px 0;
+}

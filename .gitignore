@@ -1,0 +1,55 @@
+# Dependencies
+vendor/
+node_modules/
+composer.lock
+package-lock.json
+
+# Environment
+.env
+.env.local
+.env.*.php
+config/database.php
+
+# IDE
+.vscode/
+.vs/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+temps/
+tmp/
+*.tmp
+
+# Database
+*.sql.bak
+local-db/
+*.sqlite
+*.db
+
+# Cache
+cache/
+.cache/
+
+# Build/dist
+dist/
+build/
+
+# Personal/local development
+*.local
+dev.php
+debug.php
+test*.php
+
+# Session files
+sessions/

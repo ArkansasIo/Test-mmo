@@ -1,0 +1,39 @@
+<?php
+class Fleet {
+    private $id;
+    private $playerId;
+    private $planetId;
+    private $ships;
+
+    public function __construct($id) {
+        $this->id = $id;
+        $this->loadFleetData();
+    }
+
+    private function loadFleetData() {
+        // Load fleet data from the database
+        $pdo = new PDO('mysql:host=localhost;dbname=ogame', 'root', '');
+        $stmt = $pdo->prepare("SELECT * FROM fleets WHERE id = ?");
+        $stmt->execute([$this->id]);
+        $fleet = $stmt->fetch();
+
+        $this->playerId = $fleet['player_id'];
+        $this->planetId = $fleet['planet_id'];
+        $this->ships = $fleet['ships'];
+    }
+
+    public function getShips() {
+        return $this->ships;
+    }
+
+    public function setShips($ships) {
+        $this->ships = $ships;
+        // Update ships in the database
+        $pdo = new PDO('mysql:host=localhost;dbname=ogame', 'root', '');
+        $stmt = $pdo->prepare("UPDATE fleets SET ships = ? WHERE id = ?");
+        $stmt->execute([$ships, $this->id]);
+    }
+
+    // Additional methods for fleet actions can be added here
+}
+?>

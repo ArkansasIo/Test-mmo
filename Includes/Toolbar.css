@@ -1,0 +1,35 @@
+/* toolbar.css */
+#toolbar {
+    background-color: #333;
+    overflow: hidden;
+}
+
+#toolbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#toolbar ul li {
+    float: left;
+}
+
+#toolbar ul li a {
+    display: block;
+    padding: 14px 20px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+#toolbar ul li a:hover {
+    background-color: #575757;
+}
+
+#toolbar ul li.active a {
+    background-color: #4CAF50;
+}
+
+#toolbar ul li:last-child {
+    float: right;
+}

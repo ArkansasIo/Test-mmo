@@ -1,0 +1,5 @@
+{
+  "player_id": 1,
+  "offer_resources": {"metal": 1000, "crystal": 500},
+  "request_resources": {"deuterium": 200}
+}

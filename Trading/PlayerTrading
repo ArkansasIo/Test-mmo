@@ -1,0 +1,157 @@
+<?php
+// PlayerTrading.php
+// Player-to-player trading system for Galactic Empires
+
+// Database connection
+$host = "localhost";
+$db_name = "ogame_universe";
+$username = "root";
+$password = "";
+$conn = new PDO("mysql:host=$host;dbname=$db_name", $username, $password);
+
+// Handle actions
+$action = $_GET['action'] ?? null;
+
+switch ($action) {
+    case 'offer': // Create a trade offer
+        $player_id = $_POST['player_id'] ?? null;
+        $offer_resources = $_POST['offer_resources'] ?? null;
+        $request_resources = $_POST['request_resources'] ?? null;
+        if ($player_id && $offer_resources && $request_resources) {
+            createTradeOffer($conn, $player_id, $offer_resources, $request_resources);
+        } else {
+            echo "Invalid parameters for creating a trade offer.";
+        }
+        break;
+
+    case 'list': // List active trade offers
+        listTradeOffers($conn);
+        break;
+
+    case 'accept': // Accept a trade offer
+        $trade_id = $_GET['trade_id'] ?? null;
+        $player_id = $_GET['player_id'] ?? null;
+        if ($trade_id && $player_id) {
+            acceptTradeOffer($conn, $trade_id, $player_id);
+        } else {
+            echo "Invalid parameters for accepting a trade.";
+        }
+        break;
+
+    default:
+        echo "Welcome to Player Trading! Use ?action=list to see active trade offers.";
+        break;
+}
+
+// Function to create a trade offer
+function createTradeOffer($conn, $player_id, $offer_resources, $request_resources) {
+    $offer_resources = json_encode($offer_resources);
+    $request_resources = json_encode($request_resources);
+
+    // Check if player has enough resources to create the trade
+    $query = $conn->prepare("SELECT metal, crystal, deuterium FROM players WHERE id = :player_id");
+    $query->execute(['player_id' => $player_id]);
+    $player_resources = $query->fetch(PDO::FETCH_ASSOC);
+
+    if (!$player_resources) {
+        echo "Player not found.";
+        return;
+    }
+
+    foreach ($offer_resources as $resource => $amount) {
+        if ($player_resources[$resource] < $amount) {
+            echo "Insufficient $resource to create this trade.";
+            return;
+        }
+    }
+
+    // Deduct resources from the player
+    $conn->beginTransaction();
+    foreach ($offer_resources as $resource => $amount) {
+        $conn->prepare("UPDATE players SET $resource = $resource - :amount WHERE id = :player_id")
+             ->execute(['amount' => $amount, 'player_id' => $player_id]);
+    }
+
+    // Insert the trade offer
+    $query = $conn->prepare("
+        INSERT INTO trade_offers (player_id, offer_resources, request_resources) 
+        VALUES (:player_id, :offer_resources, :request_resources)
+    ");
+    $query->execute([
+        'player_id' => $player_id,
+        'offer_resources' => $offer_resources,
+        'request_resources' => $request_resources,
+    ]);
+    $conn->commit();
+
+    echo "Trade offer created successfully!";
+}
+
+// Function to list active trade offers
+function listTradeOffers($conn) {
+    $query = $conn->query("SELECT * FROM trade_offers");
+    $offers = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    echo "<h1>Active Trade Offers</h1>";
+    foreach ($offers as $offer) {
+        echo "<p>";
+        echo "Trade ID: {$offer['id']}<br>";
+        echo "Offered Resources: " . json_encode(json_decode($offer['offer_resources']), JSON_PRETTY_PRINT) . "<br>";
+        echo "Requested Resources: " . json_encode(json_decode($offer['request_resources']), JSON_PRETTY_PRINT) . "<br>";
+        echo "<a href='?action=accept&trade_id={$offer['id']}&player_id=1'>Accept Trade</a>";
+        echo "</p>";
+    }
+}
+
+// Function to accept a trade offer
+function acceptTradeOffer($conn, $trade_id, $player_id) {
+    // Fetch the trade offer
+    $query = $conn->prepare("SELECT * FROM trade_offers WHERE id = :id");
+    $query->execute(['id' => $trade_id]);
+    $trade_offer = $query->fetch(PDO::FETCH_ASSOC);
+
+    if (!$trade_offer) {
+        echo "Trade offer not found.";
+        return;
+    }
+
+    $offer_resources = json_decode($trade_offer['offer_resources'], true);
+    $request_resources = json_decode($trade_offer['request_resources'], true);
+
+    // Fetch player resources
+    $query = $conn->prepare("SELECT metal, crystal, deuterium FROM players WHERE id = :player_id");
+    $query->execute(['player_id' => $player_id]);
+    $player_resources = $query->fetch(PDO::FETCH_ASSOC);
+
+    if (!$player_resources) {
+        echo "Player not found.";
+        return;
+    }
+
+    // Check if player has enough resources to accept the trade
+    foreach ($request_resources as $resource => $amount) {
+        if ($player_resources[$resource] < $amount) {
+            echo "Insufficient $resource to accept this trade.";
+            return;
+        }
+    }
+
+    // Execute the trade
+    $conn->beginTransaction();
+    foreach ($request_resources as $resource => $amount) {
+        $conn->prepare("UPDATE players SET $resource = $resource - :amount WHERE id = :player_id")
+             ->execute(['amount' => $amount, 'player_id' => $player_id]);
+    }
+    foreach ($offer_resources as $resource => $amount) {
+        $conn->prepare("UPDATE players SET $resource = $resource + :amount WHERE id = :player_id")
+             ->execute(['amount' => $amount, 'player_id' => $player_id]);
+    }
+
+    // Delete the trade offer
+    $query = $conn->prepare("DELETE FROM trade_offers WHERE id = :id");
+    $query->execute(['id' => $trade_id]);
+    $conn->commit();
+
+    echo "Trade accepted successfully!";
+}
+?>

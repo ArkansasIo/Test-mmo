@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Conquest Awakening</title>
+    <title>FAQ - RTS Turn-Based MMORPG</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .faq-section {
+            margin-bottom: 20px;
+        }
+        .faq-section h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            color: #444;
+        }
+        .faq {
+            margin: 10px 0;
+        }
+        .faq h3 {
+            margin: 0;
+            cursor: pointer;
+            color: #007BFF;
+        }
+        .faq h3:hover {
+            text-decoration: underline;
+        }
+        .faq p {
+            margin: 5px 0 0;
+            display: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const faqs = document.querySelectorAll(".faq h3");
+            faqs.forEach(faq => {
+                faq.addEventListener("click", () => {
+                    const answer = faq.nextElementSibling;
+                    const isVisible = answer.style.display === "block";
+                    answer.style.display = isVisible ? "none" : "block";
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>FAQ - RTS Turn-Based MMORPG</h1>
+
+        <!-- Gameplay Section -->
+        <div class="faq-section">
+            <h2>Gameplay</h2>
+            <div class="faq">
+                <h3>What is this game about?</h3>
+                <p>This is a turn-based, real-time strategy (RTS) MMORPG where you build your empire, manage resources, and conquer opponents in a futuristic space setting.</p>
+            </div>
+            <div class="faq">
+                <h3>Is the game turn-based or real-time?</h3>
+                <p>It combines turn-based mechanics for tactical decisions with real-time elements for long-term strategy management.</p>
+            </div>
+            <div class="faq">
+                <h3>How do I earn resources?</h3>
+                <p>Resources can be earned by mining planets, trading with other players, or completing missions and battles.</p>
+            </div>
+        </div>
+
+        <!-- Accounts Section -->
+        <div class="faq-section">
+            <h2>Accounts</h2>
+            <div class="faq">
+                <h3>Is the game free to play?</h3>
+                <p>Yes, the game is free to play with optional in-game purchases for premium features.</p>
+            </div>
+            <div class="faq">
+                <h3>How can I reset my account?</h3>
+                <p>You can reset your account from the account settings page. Please note this action is irreversible.</p>
+            </div>
+            <div class="faq">
+                <h3>Can I have multiple accounts?</h3>
+                <p>Each player is allowed one account per server. Violating this rule may result in account suspension.</p>
+            </div>
+        </div>
+
+        <!-- Combat Section -->
+        <div class="faq-section">
+            <h2>Combat</h2>
+            <div class="faq">
+                <h3>How do battles work?</h3>
+                <p>Battles are turn-based. You select your fleet, issue commands, and resolve conflicts during each turn.</p>
+            </div>
+            <div class="faq">
+                <h3>Can I join alliances for combat?</h3>
+                <p>Yes! Joining alliances allows you to participate in large-scale wars and gain access to shared resources and strategies.</p>
+            </div>
+            <div class="faq">
+                <h3>What happens if I lose a battle?</h3>
+                <p>You'll lose some resources and ships, but you can rebuild your fleet over time. Alliances may also support you in rebuilding.</p>
+            </div>
+        </div>
+
+        <!-- Technical Support Section -->
+        <div class="faq-section">
+            <h2>Technical Support</h2>
+            <div class="faq">
+                <h3>What browsers are supported?</h3>
+                <p>The game works best on modern browsers like Chrome, Firefox, and Edge. Internet Explorer is not supported.</p>
+            </div>
+            <div class="faq">
+                <h3>How can I report a bug?</h3>
+                <p>You can report bugs through the in-game support system or by emailing support@example.com.</p>
+            </div>
+            <div class="faq">
+                <h3>Can I play on mobile devices?</h3>
+                <p>Yes! The game is optimized for mobile devices and can be played through a browser or our official app.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

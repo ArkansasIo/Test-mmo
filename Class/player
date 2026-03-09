@@ -1,0 +1,30 @@
+<?php
+
+class Player {
+    private $username;
+    private $password;
+    private $email;
+    private $resources;
+
+    public function __construct($username, $password, $email) {
+        $this->username = $username;
+        $this->password = $password;
+        $this->email = $email;
+        $this->resources = ['metal' => 1000, 'crystal' => 1000, 'deuterium' => 1000];
+    }
+
+    public function getUsername() {
+        return $this->username;
+    }
+
+    public function getResources() {
+        return $this->resources;
+    }
+
+    public function setResources($resources) {
+        $this->resources = $resources;
+    }
+
+    // Additional methods for player actions can be added here
+}
+?>
